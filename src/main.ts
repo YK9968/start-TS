@@ -76,14 +76,6 @@ function customError(): never {
 }
 
 // ============================================
-
-// Завдання 5
-
-// Виконуйте це завдання у файлі src/basic/5.ts.
-
-// Типізуйте функцію isWeekend яка приймає день тижня з enumDayOfWeek і повертає
-// boolean значення, що вказує, чи це день робочий чи вихідний.
-
 enum DayOfWeek {
   Monday,
   Tuesday,
@@ -94,17 +86,23 @@ enum DayOfWeek {
   Sunday,
 }
 
-const isWeekend = (day) => {};
+const isWeekend = (day: DayOfWeek): boolean => {
+  if (day === DayOfWeek.Saturday || day === DayOfWeek.Sunday) {
+    return false;
+  }
+  return true;
+};
 
 // ===================================
-// Завдання 6
 
-// Виконуйте це завдання у файлі src/basic/6.ts.
+interface User {
+  name: string;
+  age: number;
+  email: string;
+  address?: object;
+}
 
-// Створіть інтерфейс User для типізації об'єктів, які містять такі властивості.
-// Зверніть увагу, що адреса є необов'язковою властивістю.
-
-const mango = {
+const mango: User = {
   name: "Mango",
   age: 30,
   email: "john@example.com",
@@ -114,7 +112,7 @@ const mango = {
   },
 };
 
-const poly = {
+const poly: User = {
   name: "Mango",
   age: 30,
   email: "john@example.com",
