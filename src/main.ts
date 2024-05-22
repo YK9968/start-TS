@@ -43,7 +43,7 @@ const age: number = 50;
 const username: string = "Max";
 const toggle: boolean = true;
 const empty: null = null;
-const callback = (a: number) => {
+const callback = (a: number): number => {
   return 100 + a;
 };
 
@@ -95,11 +95,16 @@ const isWeekend = (day: DayOfWeek): boolean => {
 
 // ===================================
 
+type Address = {
+  city: string;
+  country: string;
+};
+
 interface User {
   name: string;
   age: number;
   email: string;
-  address?: object;
+  address?: Address;
 }
 
 const mango: User = {
@@ -119,14 +124,22 @@ const poly: User = {
 };
 
 // =========================================================
+type Accounts = [string, ...string[]];
+type Status = "open" | "close";
+type Details = {
+  createAt: Date;
+  updateAt: Date;
+};
 
-// Завдання 7
+type Pages = {
+  title: string;
+  likes: number;
+  accounts: Accounts;
+  status: Status;
+  details?: Details;
+};
 
-// Виконуйте це завдання у файлі src/basic/7.ts.
-
-// У вас є два об'єкти:
-
-const page1 = {
+const page1: Pages = {
   title: "The awesome page",
   likes: 100,
   accounts: ["Max", "Anton", "Nikita"],
@@ -137,13 +150,11 @@ const page1 = {
   },
 };
 
-const page2 = {
+const page2: Pages = {
   title: "Python or Js",
   likes: 5,
   accounts: ["Alex"],
   status: "close",
 };
-
-// Створіть новий тип даних, який підходить для цих двох об'єктів.
 
 // ==============================================================================
