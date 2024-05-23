@@ -54,13 +54,8 @@ person = ["Max", 21];
 // ===================================
 let mixedType: string | number;
 
-mixedType = "string";
-mixedType = 5;
-
 type enableOrDisable = "enable" | "disable";
 let choose: enableOrDisable;
-choose = "enable";
-choose = "disable";
 
 // =======================================
 function showMessage(message: string): void {
@@ -88,9 +83,10 @@ enum DayOfWeek {
 
 const isWeekend = (day: DayOfWeek): boolean => {
   if (day === DayOfWeek.Saturday || day === DayOfWeek.Sunday) {
+    return true;
+  } else {
     return false;
   }
-  return true;
 };
 
 // ===================================
@@ -100,14 +96,14 @@ type Address = {
   country: string;
 };
 
-interface User {
+interface User1 {
   name: string;
   age: number;
   email: string;
   address?: Address;
 }
 
-const mango: User = {
+const mango: User1 = {
   name: "Mango",
   age: 30,
   email: "john@example.com",
@@ -117,7 +113,7 @@ const mango: User = {
   },
 };
 
-const poly: User = {
+const poly: User1 = {
   name: "Mango",
   age: 30,
   email: "john@example.com",
@@ -158,3 +154,103 @@ const page2: Pages = {
 };
 
 // ==============================================================================
+
+// Завдання 1
+
+// Виконуйте це завдання у файлі src/generics/1.ts.
+
+// Типізуйте асинхронну функцію fetchData, яка приймає URL ресурсу та повертає об'єкт з
+// даними.Використовуйте Generics для типізації повернутих даних.
+
+import axios from "axios";
+
+async function fetchData<T>(url: string): Promise<T> {
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Error fetching from ${url}: ${error}`);
+  }
+}
+
+// ==============================================================================
+
+type AllType = {
+  name: string;
+  position: number;
+  color: string;
+  weight: number;
+};
+
+function compare<T extends AllType, U extends AllType>(
+  top: Pick<T, "name" | "color">,
+  bottom: Pick<U, "position" | "weight">
+): AllType {
+  return {
+    name: top.name,
+    color: top.color,
+    position: bottom.position,
+    weight: bottom.weight,
+  };
+}
+
+// ===========================================================
+function merge<T extends object, U extends object>(objA: T, objB: U): T | U {
+  return Object.assign(objA, objB);
+}
+
+// =========================================================================
+
+type User = {
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+};
+
+function createOrUpdateUser(initialValues: Partial<User>): void {
+  console.log(initialValues.email);
+  console.log(initialValues.password);
+}
+
+createOrUpdateUser({
+  email: "user@mail.com",
+  password: "password123",
+});
+
+// =========================================================================
+
+export enum UserRole {
+  admin = "admin",
+  editor = "editor",
+  guest = "guest",
+}
+
+type Role = Record<UserRole, string>;
+
+const RoleDescription: Role = {
+  [UserRole.admin]: "Admin User",
+  [UserRole.editor]: "Editor User",
+  [UserRole.guest]: "Guest User",
+};
+
+// ================================================================================
+
+type Errors = {
+  email?: string[];
+  firstName?: string[];
+  lastName?: string[];
+  phone?: string[];
+};
+
+type Form = {
+  email: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  phone: string | null;
+  errors: Errors;
+};
+
+type Params = Omit<Form, "errors">;
+
+// =================================================
